@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm run build:frontend",
+  "outputDirectory": "frontend/dist",
+  "env": {
+    "VITE_API_URL": "@vite_api_url",
+    "VITE_APP_NAME": "BuscaPeça"
+  },
+  "envPrefix": "VITE_"
+}
