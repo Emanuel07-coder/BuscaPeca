@@ -131,36 +131,4 @@ export class OrganizationService {
       `SELECT * FROM organizations WHERE is_active = false ORDER BY created_at ASC`
     );
   }
-      .eq('email', email)
-      .single();
-
-    if (error || !user) throw new Error('Credenciais inválidas');
-
-    const isPasswordValid = await bcrypt.compare(pass, user.password_hash);
-    if (!isPasswordValid) throw new Error('Credenciais inválidas');
-
-    // Gerar Token JWT com Payload do PRD
-    const token = jwt.sign(
-      { 
-        sub: user.id, 
-        role: user.role, 
-        organization_id: user.organizations?.id || null 
-      }, 
-      process.env.JWT_SECRET!, 
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
-    );
-
-    return { token, user };
-  }
-
-  async getMe(userId: string) {
-    const { data, error } = await supabase
-      .from('users')
-      .select('id, email, full_name, role, organizations(*)')
-      .eq('id', userId)
-      .single();
-
-    if (error) throw new Error('Usuário não encontrado');
-    return data;
-  }
 }
