@@ -29,7 +29,7 @@ export class BrasilAPIService {
         return null;
       }
 
-      const data = await res.json();
+      const data: any = await res.json();
 
       return {
         cnpj: data.cnpj,

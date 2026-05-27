@@ -47,7 +47,7 @@ export const authenticatePlugin: FastifyPluginAsync = fp(async (app: import('fas
     if (!token) return;
 
     try {
-      const payload = (await (request as any).jwtVerify<JWTPayload>()).payload;
+      const payload = ((await (request as any).jwtVerify()) as { payload: JWTPayload }).payload;
       request.authUser = {
         id: payload.sub,
         role: payload.role,
