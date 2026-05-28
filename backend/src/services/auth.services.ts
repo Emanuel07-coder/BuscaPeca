@@ -1,4 +1,4 @@
-import { hash, compare } from 'bcryptjs';
+import bcrypt from 'bcryptjs'; // ALTERADO: Importação padrão para evitar erro de ESM
 import { query, queryOne } from '../lib/db';
 import type { Organization, User, UserRole, OrganizationType } from '../types/domain';
 
@@ -10,7 +10,8 @@ export class AuthService {
     role: UserRole = 'operator',
     organizationId?: string
   ): Promise<User> {
-    const hashedPassword = await hash(password, 10);
+    // ALTERADO: Agora usamos bcrypt.hash
+    const hashedPassword = await bcrypt.hash(password, 10);
     
     const result = await queryOne<User>(
       `INSERT INTO users (email, password_hash, role, organization_id)
@@ -35,7 +36,8 @@ export class AuthService {
 
     if (!user) return null;
 
-    const isValid = await compare(password, user.password_hash);
+    // ALTERADO: Agora usamos bcrypt.compare
+    const isValid = await bcrypt.compare(password, user.password_hash);
     if (!isValid) return null;
 
     delete user.password_hash;
