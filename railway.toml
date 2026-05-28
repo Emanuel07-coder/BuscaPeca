@@ -3,4 +3,4 @@ builder = "nixpacks"
 buildCommand = "npm run build"
 
 [deploy]
-startCommand = "node dist/index.js"
+startCommand = "node --experimental-specifier-resolution=node dist/index.js"
